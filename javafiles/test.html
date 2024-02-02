@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Command Line</title>
+  <title>Command Line Interface on WEB</title>
   <style>
     body {
       font-family: 'Courier New', Courier, monospace;
@@ -32,7 +32,7 @@
 </head>
 <body>
   <div id="output"></div>
-  <input type="text" id="input" placeholder="Type your command...">
+  <input type="text" id="input" placeholder="command here...">
   
   <script>
     const outputDiv = document.getElementById('output');
@@ -49,14 +49,27 @@
         outputDiv.innerHTML += `<div>> ${command}</div>`;
         
         // Process command
-        processCommand(command);
+        sendCommandToBackend(command);
       }
     });
 
-    function processCommand(command) {
-      // Here you can define the logic to process the command
-      // For simplicity, let's just echo the command for now
-      outputDiv.innerHTML += `<div>Echo: ${command}</div>`;
+    function sendCommandToBackend(command) {
+      // Send the command to the backend using AJAX (fetch API)
+      fetch('http://localhost:8080/command', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        body: command
+      })
+      .then(response => response.text())
+      .then(data => {
+        // Handle the response from the backend
+        outputDiv.innerHTML += `<div>Response from server: ${data}</div>`;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     }
   </script>
 </body>
