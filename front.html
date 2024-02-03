@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Command Line</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: black;
+      color: white;
+      padding: 20px;
+    }
+
+    #output {
+      width: 100%;
+      height: 300px;
+      overflow-y: scroll;
+      border: 1px solid white;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    #input {
+      width: 100%;
+      padding: 5px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: white;
+    }
+
+    #feedback {
+      margin-top: 10px;
+      color: yellow; /* Adjust the color as needed */
+    }
+  </style>
+</head>
+<body>
+  <div id="output"></div>
+  <input type="text" id="input" placeholder="Type your command..." autofocus>
+  <div id="feedback"></div>
+
+  <script>
+    const outputDiv = document.getElementById('output');
+    const inputField = document.getElementById('input');
+    const feedbackDiv = document.getElementById('feedback');
+  
+    inputField.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        const command = inputField.value.trim();
+        if (command !== '') {
+          // Clear input field
+          inputField.value = '';
+  
+          // Display user input
+          outputDiv.innerHTML += `<div>> ${command}</div>`;
+  
+          // Make AJAX/Fetch request to Spring Boot backend
+          fetch('http://localhost:8080/command', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain'
+            },
+            body: command
+          })
+            .then(response => response.text()) // Change this line to response.text()
+            .then(data => {
+              // Display backend response
+              outputDiv.innerHTML += `<div>${data}</div>`;
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              feedbackDiv.textContent = 'Error communicating with the server.';
+            });
+        }
+      }
+    });
+  </script>
+  
+</body>
+</html>
