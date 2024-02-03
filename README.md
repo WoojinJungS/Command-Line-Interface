@@ -8,4 +8,5 @@
 It only works locally and serves as a prototype for further projects.
 Was a good exercise to figure out what Springboot and Javascript is.
 
-/b Would Recommend 5/5
+**Would Recommend 5/5**
+
