@@ -7,6 +7,9 @@
 
 It only works locally and serves as a prototype for further projects.
 Was a good exercise to figure out what Springboot and Javascript is.
+Took 8 hours with no prior knowledge at all on Springboot and Javascript
+
+Can confirm it was a nightmare connecting the simplest of both ends
 
 **Would Recommend 5/5**
 
